@@ -33,16 +33,16 @@ const handleJWTExpiredError = () => {
 /** @description it will be used to send error */
 const sendError = (err, req, res) => {
   if (err.json) {
-    res
-      .status(err.statusCode)
-      .json(
-        new MobileErr(
-          err.message,
-          "toast",
-          { error: err.message },
-          req.baseHeaders
-        )
-      );
+    res.status(err.statusCode).json(
+      new MobileErr(
+        err.message,
+        "toast",
+        {
+          error: err.message
+        },
+        req.baseHeaders
+      )
+    );
   } else {
     if (err.isOperational) {
       res.status(200).render("base", {
