@@ -40,13 +40,13 @@
     "express-rate-limit": "^5.2.3",
     "helmet": "^4.2.0",
     "hpp": "^0.2.3",
-    "husky": "^8.0.2",
+    "husky": "^3.1.0",
     "joi": "^14.3.1",
-    "lint-staged": "^13.1.0",
+    "lint-staged": "^9.5.0",
     "lodash": "^4.17.21",
     "mongoose": "^5.10.13",
     "path": "^0.12.7",
-    "prettier": "^2.8.1"
+    "prettier": "^1.19.1"
   },
   "husky": {
 		"hooks": {

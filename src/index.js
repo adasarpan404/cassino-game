@@ -14,7 +14,7 @@ process.on('uncaughtException', err => {
     process.exit(1);
 });
 
-                                                       mongoose
+mongoose
     .connect(config.MONGO_URI, {
         useNewUrlParser: true,
         useCreateIndex: true,
@@ -26,7 +26,7 @@ process.on('uncaughtException', err => {
 const /**@desc specifying the port for server */
     port = config.MONGO_URI || 3000;
 
-                                                const /**@desc starting the server */
+const /**@desc starting the server */
     server = app.listen(port, () => {
         console.log(`App running on port ${port}...`);
     });
