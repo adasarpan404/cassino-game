@@ -1,10 +1,10 @@
-/**importing from node*/
+// importing from node
 
 import Joi from "joi";
 import path from "path";
 import _ from "lodash";
 
-/**end of imports */
+// end of imports
 
 let /**@desc path for environment variable files */
   envPath = path.resolve(process.cwd(), ".env");
@@ -16,7 +16,10 @@ const /**@desc validation for env files*/
     PORT: Joi.number().default(4103),
     MONGO_URI: Joi.string()
       .required()
-      .description("Mongo uri")
+      .description("Mongo uri"),
+    JWT_SECRET: Joi.string().required(),
+    JWT_EXPIRES_IN: Joi.string().required(),
+    JWT_COOKIE_EXPIRES_IN: Joi.string().required()
   })
     .unknown()
     .required();
@@ -30,5 +33,10 @@ if (error) {
 export const /**@desc will be used in our source files*/
   config = {
     PORT: envVars.PORT,
-    MONGO_URI: envVars.MONGO_URI
+    MONGO_URI: envVars.MONGO_URI,
+    JWT: {
+      secret: envVars.JWT_SECRET,
+      expiresIn: envVars.JWT_EXPIRES_IN,
+      cookieExpiresIn: envVars.JWT_COOKIE_EXPIRES_IN
+    }
   };

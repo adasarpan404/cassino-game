@@ -1,20 +1,23 @@
-/** importing from node */
+// importing from node
 import jwt from "jsonwebtoken";
 import { promisify } from "util";
 
-/**importing from model */
-import UserModel from "../model/user.model";
+// importing from model
+import UserModel from "../model/user.model.js";
 
-/**importing from common */
-import CatchAsync from "../common/CatchAsync";
-import AppError from "../common/AppError";
+// importing from common
+import CatchAsync from "../common/CatchAsync.js";
+import AppError from "../common/AppError.js";
 
-/**end of imports */
+// importing from config
+import { config } from "../config/config.js";
+
+// end of imports
 
 /**@desc for creating the JWT Token */
 const signToken = id => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRES_IN
+  return jwt.sign({ id }, config.JWT.secret, {
+    expiresIn: config.JWT.expiresIn
   });
 };
 
@@ -29,7 +32,7 @@ const createSendToken = (user, statusCode, res) => {
   const token = signToken(user._id);
   const cookieOptions = {
     expires: new Date(
-      Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
+      Date.now() + config.JWT.cookieExpiresIn * 24 * 60 * 60 * 1000
     ),
     httpOnly: true
   };
