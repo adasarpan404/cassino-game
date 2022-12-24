@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon --max-old-space-size=2048 --exec  babel-node src/index.js -e mjs",
-    "build": "babel src --out-dir dist  --copy-files"
+    "build": "babel src --out-dir dist  --copy-files",
+    "serve": "npm run build && node dist/index.js"
   },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
@@ -30,6 +31,7 @@
     "@babel/polyfill": "^7.0.0",
     "@babel/runtime": "^7.2.0",
     "babel-polyfill": "^6.26.0",
+    "bcryptjs": "^2.4.3",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
@@ -41,6 +43,7 @@
     "hpp": "^0.2.3",
     "husky": "^3.1.0",
     "joi": "^14.3.1",
+    "jsonwebtoken": "^8.5.1",
     "lint-staged": "^9.5.0",
     "lodash": "^4.17.21",
     "mongoose": "^5.10.13",
@@ -48,6 +51,7 @@
     "nodemon": "^2.0.20",
     "path": "^0.12.7",
     "prettier": "^1.19.1",
+    "pug": "^3.0.0",
     "xss-clean": "^0.1.1"
   },
   "husky": {

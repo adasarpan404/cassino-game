@@ -2,7 +2,7 @@
 import mongoose from "mongoose";
 
 /** importing from config */
-import { config } from "../config/config.js";
+import { config } from "./config/config.js";
 
 /** importing from app */
 import app from "./app.js";
