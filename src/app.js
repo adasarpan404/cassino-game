@@ -1,4 +1,4 @@
-/** importing from node */
+// importing from node
 import express from "express";
 import morgan from "morgan";
 import xss from "xss-clean";
@@ -8,12 +8,12 @@ import compression from "compression";
 import mongoSantize from "express-mongo-sanitize";
 import helmet from "helmet";
 import cookieParser from "cookie-parser";
-// import viewRouter from './Router/viewRouter'
-/** importing from common*/
+
+// importing from common
 import AppError from "./common/AppError";
 import ErrorHandler from "./common/ErrorHandler";
 
-/** end of imports */
+// end of imports
 
 const app = express();
 app.set("view engine", "pug");

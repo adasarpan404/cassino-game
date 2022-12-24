@@ -1,13 +1,13 @@
-/**importing from node */
+// importing from node
 import mongoose from "mongoose";
 
-/** importing from config */
+// importing from config
 import { config } from "./config/config.js";
 
-/** importing from app */
+// importing from app
 import app from "./app.js";
 
-/** end of imports */
+// end of imports
 process.on("uncaughtException", err => {
   console.log("UNCAUGHT EXCEPTION! 💥 Shutting down...");
   console.log(err.name, err.message);
