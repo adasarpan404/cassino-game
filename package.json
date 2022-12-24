@@ -4,7 +4,7 @@
   "description": "Basic",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --max-old-space-size=2048 --exec  babel-node src/index.js  -e mjs",
+    "start": "nodemon --max-old-space-size=2048 --exec  babel-node src/index.js -e mjs",
     "build": "babel src --out-dir dist  --copy-files"
   },
   "lint-staged": {
@@ -23,8 +23,7 @@
     "@babel/preset-env": "^7.2.0",
     "babel-plugin-inline-import": "^3.0.0",
     "babel-plugin-transform-object-rest-spread": "^7.0.0-beta.3",
-    "babel-plugin-transform-remove-console": "^6.9.4",
-    "nodemon": "^2.0.20"
+    "babel-plugin-transform-remove-console": "^6.9.4"
   },
   "dependencies": {
     "@babel/plugin-transform-runtime": "^7.2.0",
@@ -45,13 +44,15 @@
     "lint-staged": "^9.5.0",
     "lodash": "^4.17.21",
     "mongoose": "^5.10.13",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.20",
     "path": "^0.12.7",
-    "prettier": "^1.19.1"
+    "prettier": "^1.19.1",
+    "xss-clean": "^0.1.1"
   },
   "husky": {
 		"hooks": {
 			"pre-commit": "lint-staged"
 		}
 	}
-
 }

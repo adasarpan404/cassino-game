@@ -24,7 +24,7 @@ mongoose
   .then(() => console.log("DB connection successful!"));
 
 const /**@desc specifying the port for server */
-  port = config.MONGO_URI || 3000;
+  port = config.PORT || 3000;
 
 const /**@desc starting the server */
   server = app.listen(port, () => {
