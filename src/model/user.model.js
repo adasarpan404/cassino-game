@@ -1,5 +1,18 @@
+//importing from node
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
+
+// end of imports
+
+/**
+ * @params string @returns boolean
+ * @desc validating phone number according to indian format
+ */
+
+const validatePhoneNumber = function(phonenumber) {
+  const re = /^[6-9]\d{9}$/;
+  return re.test(phonenumber);
+};
 
 const userSchema = new mongoose.Schema(
   {
@@ -7,9 +20,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, "Please tell us your name"]
     },
-    number: {
+    phonenumber: {
       type: String,
       required: [true, "Please tell us your email"],
+      validate: [validatePhoneNumber, "Please fill a valid phone number"],
       unique: true
     },
     password: {
@@ -60,6 +74,13 @@ userSchema.methods.changePasswordAfter = function(JWTtimeStamp) {
     return JWTtimeStamp < changedTimestamp;
   }
   return false;
+};
+
+userSchema.methods.correctPassword = async function(
+  candidatePassword,
+  userPassword
+) {
+  return await bcrypt.compare(candidatePassword, userPassword);
 };
 
 const UserModel = mongoose.model("User", userSchema);

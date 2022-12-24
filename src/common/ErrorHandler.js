@@ -1,5 +1,5 @@
 import AppError from "./AppError.js";
-
+import { MobileErr, MobileRes } from "./MobileApiRes.js";
 const handleCastErrorDB = err => {
   const message = `Invalid ${err.path} : ${err.value}`;
   return new AppError(message, 400);
@@ -32,19 +32,38 @@ const handleJWTExpiredError = () => {
 
 /** @description it will be used to send error */
 const sendError = (err, req, res) => {
-  if (err.isOperational) {
-    res.status(200).render("base", {
-      title: "something went wrong",
-      purpose: err.message
-    });
-
-    // Programming or other unknown error: don't leak error details
+  if (err.json) {
+    res
+      .status(err.statusCode)
+      .json(
+        new MobileErr(
+          err.message,
+          "toast",
+          { error: err.message },
+          req.baseHeaders
+        )
+      );
   } else {
-    console.error("ERROR 💥", err);
-    res.status(500).json({
-      status: "error",
-      message: err.message
-    });
+    if (err.isOperational) {
+      res.status(200).render("base", {
+        title: "something went wrong",
+        purpose: err.message
+      });
+
+      // Programming or other unknown error: don't leak error details
+    } else {
+      console.error("ERROR 💥", err);
+      res.status(500).json(
+        new MobileErr(
+          err.message,
+          "toast",
+          {
+            error: err.message
+          },
+          req.baseHeaders
+        )
+      );
+    }
   }
 };
 

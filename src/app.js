@@ -10,8 +10,11 @@ import helmet from "helmet";
 import cookieParser from "cookie-parser";
 
 // importing from common
-import AppError from "./common/AppError";
-import ErrorHandler from "./common/ErrorHandler";
+import AppError from "./common/AppError.js";
+import ErrorHandler from "./common/ErrorHandler.js";
+
+// importing from router
+import authRouter from "./routes/auth.routes.js";
 
 // end of imports
 
@@ -31,7 +34,7 @@ app.use(cookieParser());
 app.use(compression());
 
 // app.use('/', viewRouter)
-// app.use('/api/v1/users', userRouter);
+app.use("/api/v1/auth", authRouter);
 
 app.all("*", (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));

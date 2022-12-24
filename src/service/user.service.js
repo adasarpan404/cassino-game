@@ -65,15 +65,18 @@ export const signUp = CatchAsync(async (req, res, next) => {
 
 /**@desc for doing the login  */
 export const login = CatchAsync(async (req, res, next) => {
-  const { email, password } = req.body;
-  if (!email || !password) {
-    return next(new AppError("please provide email and password", 400));
+  const { phonenumber, password } = req.body;
+  if (!phonenumber || !password) {
+    return next(new AppError("please provide email and password", 400, true));
   }
-  const userObj = await UserModel.findOne({ email }).select("+password");
-  if (!userObj || !(await userObj.correctPassword(password, user.password))) {
-    return next(new AppError("incorrect email and password", 401));
+  const userObj = await UserModel.findOne({ phonenumber }).select("+password");
+  if (
+    !userObj ||
+    !(await userObj.correctPassword(password, userObj.password))
+  ) {
+    return next(new AppError("incorrect email and password", 401, true));
   }
-  createSendToken(user, 200, res);
+  createSendToken(userObj, 200, res);
 });
 
 /**@desc for authenticating the routes */
