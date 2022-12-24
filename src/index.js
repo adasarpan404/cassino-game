@@ -14,7 +14,6 @@ process.on('uncaughtException', err => {
     process.exit(1);
 });
 
-
 mongoose
     .connect(config.MONGO_URI, {
         useNewUrlParser: true,
