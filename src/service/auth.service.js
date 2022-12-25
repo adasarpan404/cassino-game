@@ -11,6 +11,7 @@ import AppError from "../common/AppError.js";
 
 // importing from config
 import { config } from "../config/config.js";
+import { MobileRes } from "../common/MobileApiRes.js";
 
 // end of imports
 
@@ -25,10 +26,12 @@ const signToken = id => {
  * @param user(Object)
  * @param statusCode(Number)
  * @param res(Object) it is being used for sending the response
+ * @param message (String)
+ * @param header (Object)
  * @desc it is being used for sending response after successfull login and signup for signup.
  * It creates token for authentication for the user
  */
-const createSendToken = (user, statusCode, res) => {
+const createSendToken = (user, statusCode, res, message, headers) => {
   const token = signToken(user._id);
   const cookieOptions = {
     expires: new Date(
@@ -36,20 +39,19 @@ const createSendToken = (user, statusCode, res) => {
     ),
     httpOnly: true
   };
-  if (process.env.NODE_ENV === "production") cookieOptions.secure = true;
 
+  cookieOptions.secure = true;
   res.cookie("jwt", token, cookieOptions);
 
   // Remove password from output
   user.password = undefined;
 
-  res.status(statusCode).json({
-    status: "success",
-    token,
-    data: {
-      user
-    }
-  });
+  const data = {
+    ...user.toObject(),
+    token
+  };
+
+  res.status(statusCode).json(new MobileRes(message, data, headers));
 };
 
 /**@desc for doing the signup*/
@@ -60,7 +62,7 @@ export const signUp = CatchAsync(async (req, res, next) => {
     password: req.body.password,
     passwordConfirm: req.body.passwordConfirm
   });
-  createSendToken(userObj, 201, res);
+  createSendToken(userObj, 201, res, "Sign up successfully", req.baseHeaders);
 });
 
 /**@desc for doing the login  */
@@ -76,7 +78,7 @@ export const login = CatchAsync(async (req, res, next) => {
   ) {
     return next(new AppError("incorrect email and password", 401, true));
   }
-  createSendToken(userObj, 200, res);
+  createSendToken(userObj, 200, res, "login successfull", req.baseHeaders);
 });
 
 /**@desc for authenticating the routes */
@@ -95,19 +97,24 @@ export const protect = CatchAsync(async (req, res, next) => {
       new AppError("You are not logged in! Please login in to get access", 401)
     );
   }
-  const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+  const decoded = await promisify(jwt.verify)(token, config.JWT.secret);
   const currentUser = await UserModel.findById(decoded.id);
   if (!currentUser) {
     return next(
       new AppError(
         "The User belonging to this token does not longer exist",
-        401
+        401,
+        false
       )
     );
   }
   if (currentUser.changePasswordAfter(decoded.iat)) {
     return next(
-      new AppError("User recently changed Password! please login again", 401)
+      new AppError(
+        "User recently changed Password! please login again",
+        401,
+        true
+      )
     );
   }
   req.user = currentUser;
@@ -120,9 +127,22 @@ export const restrictTo = (...roles) => {
   return (req, res, next) => {
     if (!roles.includes(req.user.role)) {
       return next(
-        new AppError("You do not have permission to perform this action", 403)
+        new AppError(
+          "You do not have permission to perform this action",
+          403,
+          false
+        )
       );
     }
     next();
   };
 };
+
+/**@desc logging out the user */
+export const logout = CatchAsync(async (req, res, next) => {
+  res.cookie("jwt", "loggedout", {
+    expires: new Date(Date.now() + 10 * 1000),
+    httpOnly: true
+  });
+  res.status(200).json({ status: "success" });
+});

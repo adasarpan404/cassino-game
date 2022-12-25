@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon --max-old-space-size=2048 --exec  babel-node src/index.js -e js",
-    "build": "babel src --out-dir dist  --copy-files",
+    "build": "babel src --out-dir dist --copy-files --no-comments",
     "serve": "npm run build && node dist/index.js"
   },
   "lint-staged": {

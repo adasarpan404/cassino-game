@@ -15,10 +15,13 @@ import ErrorHandler from "./common/ErrorHandler.js";
 
 // importing from router
 import authRouter from "./routes/auth.routes.js";
+import { attachBaseHeaders } from "./common/AttachBaseHeaders.js";
 
 // end of imports
 
 const app = express();
+
+app.use(attachBaseHeaders);
 app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "../views"));
 app.use(express.static(path.join(__dirname, "public")));

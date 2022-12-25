@@ -2,7 +2,7 @@
 import express from "express";
 
 // importing from service
-import { signUp, login } from "../service/user.service";
+import { signUp, login } from "../service/auth.service";
 
 // end of imports
 
