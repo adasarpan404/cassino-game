@@ -74,11 +74,21 @@ export default function ErrorHandler(err, req, res, next) {
 
   let error = { ...err };
   error.message = err.message;
-  if (error.name === "cast error") error = handleCastErrorDB(error);
-  if (error.code === 11000) error = handleDuplicateFieldsDB(error);
-  if (error.name === "ValidationError") error = handleValidationErrorDB(error);
-  if (error.name === "JsonWebTokenError") error = handleJWTError();
-  if (error.name === "TokenExpiredError") error = handleJWTExpiredError();
+  if (error.name === "cast error") {
+    error = handleCastErrorDB(error);
+  }
+  if (error.code === 11000) {
+    error = handleDuplicateFieldsDB(error);
+  }
+  if (error.name === "ValidationError") {
+    error = handleValidationErrorDB(error);
+  }
+  if (error.name === "JsonWebTokenError") {
+    error = handleJWTError();
+  }
+  if (error.name === "TokenExpiredError") {
+    error = handleJWTExpiredError();
+  }
 
   sendError(error, req, res);
 }

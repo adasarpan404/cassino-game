@@ -8,7 +8,6 @@ import bcrypt from "bcryptjs";
  * @params string @returns boolean
  * @desc validating phone number according to indian format
  */
-
 const validatePhoneNumber = function(phonenumber) {
   const re = /^[6-9]\d{9}$/;
   return re.test(phonenumber);
