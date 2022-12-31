@@ -1,3 +1,6 @@
+/**
+ * @description it is the base for all response
+ */
 class BaseMobileRes {
   constructor(
     invalid_token,
@@ -18,6 +21,9 @@ class BaseMobileRes {
   }
 }
 
+/**
+ * @description for error response
+ */
 export class MobileErr extends BaseMobileRes {
   constructor(
     message,
@@ -34,6 +40,9 @@ export class MobileErr extends BaseMobileRes {
   }
 }
 
+/**
+ * @description for success response
+ */
 export class MobileRes extends BaseMobileRes {
   constructor(
     message,

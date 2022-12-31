@@ -15,7 +15,11 @@ import { MobileRes } from "../common/MobileApiRes.js";
 
 // end of imports
 
-/**@desc for creating the JWT Token */
+/**
+ *
+ * @param {*} id id of the user
+ * @returns
+ */
 const signToken = id => {
   return jwt.sign({ id }, config.JWT.secret, {
     expiresIn: config.JWT.expiresIn
