@@ -5,10 +5,11 @@ import bcrypt from "bcryptjs";
 // end of imports
 
 /**
- * @params string @returns boolean
- * @desc validating phone number according to indian format
+ *
+ * @param {*} phonenumber String
+ * @returns boolean
  */
-const validatePhoneNumber = function(phonenumber) {
+const validatePhoneNumber = phonenumber => {
   const re = /^[6-9]\d{9}$/;
   return re.test(phonenumber);
 };
