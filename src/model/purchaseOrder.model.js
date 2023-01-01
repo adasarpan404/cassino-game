@@ -29,9 +29,6 @@ const purchaseOrderSchema = new mongoose.Schema(
   }
 );
 
-const PurchaseOrderModel = new mongoose.model(
-  "purchaseorder",
-  purchaseOrderSchema
-);
+const PurchaseOrderModel = mongoose.model("purchaseorder", purchaseOrderSchema);
 
 export default PurchaseOrderModel;

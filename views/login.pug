@@ -1,0 +1,20 @@
+head
+  meta(charset='UTF-8')
+  meta(http-equiv='X-UA-Compatible' content='IE=edge')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title Document
+  link(rel='stylesheet' href='/css/login.css')
+#navigation
+  h2 Login/Register
+  form.loginForm
+    .container
+      label(for='uname')
+        b Phone Number
+      input#phonenumber(type='text' placeholder='Enter your Phone Number' name='uname' required='')
+      label(for='psw')
+        b Password
+      input#password(type='password' placeholder='Enter Password' name='psw' required='')
+      span.psw
+        a(href='#') Forgot password?
+      button(type='submit') Login
+script(src="/js/bundle.js") 

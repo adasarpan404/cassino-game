@@ -12,10 +12,11 @@ import cookieParser from "cookie-parser";
 // importing from common
 import AppError from "./common/AppError.js";
 import ErrorHandler from "./common/ErrorHandler.js";
-
+import { attachBaseHeaders } from "./common/AttachBaseHeaders.js";
 // importing from router
 import authRouter from "./routes/auth.routes.js";
-import { attachBaseHeaders } from "./common/AttachBaseHeaders.js";
+import purchaseOrderRouter from "./routes/purchaseorder.routes.js";
+import viewRouter from "./routes/view.routes.js";
 
 // end of imports
 
@@ -24,7 +25,7 @@ const app = express();
 app.use(attachBaseHeaders);
 app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "../views"));
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "../public")));
 
 app.use(morgan("dev"));
 app.use(helmet());
@@ -36,8 +37,10 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(compression());
 
-// app.use('/', viewRouter)
+// specifying routes
+app.use("/", viewRouter);
 app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/purchase-order", purchaseOrderRouter);
 
 app.all("*", (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));

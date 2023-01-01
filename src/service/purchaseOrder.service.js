@@ -38,8 +38,8 @@ export const addBalanceAdmin = CatchAsync(async (req, res, next) => {
   if (!amount) {
     next(new AppError("please provide amount", 400, true));
   }
-  if (!mobile) {
-    next(new AppError("please provide mobile of the user", 400, true));
+  if (!phonenumber) {
+    next(new AppError("please provide phonenumber of the user", 400, true));
   }
   if (!method) {
     next(new AppError("Please provide upi of the user", 400, true));
@@ -72,10 +72,56 @@ export const addBalanceAdmin = CatchAsync(async (req, res, next) => {
     );
 });
 
-async function getActivePurchaseOrder() {}
+/**
+ *
+ * @param {*} userId Mongoose.Types.ObjectId
+ * @returns array of objects
+ */
+async function getActivePurchaseOrder(userId) {
+  const query = [
+    {
+      $match: {
+        user: userId,
+        $expr: {
+          $gte: [{ $subtract: ["$amount", "$usedAmount"] }, 0]
+        }
+      }
+    },
+    {
+      $project: {
+        balance: { $subtract: ["$amount", "$usedAmount"] },
+        totalAmount: 1,
+        usedAmount: 1,
+        _id: 1
+      }
+    }
+  ];
+  const purchaseOrderObj = await PurchaseOrderModel.aggregate(query);
+  return purchaseOrderObj;
+}
 
-async function calculateUserBalance() {}
+async function calculateUserBalance(userId) {
+  const activePurchaseOrderList = await getActivePurchaseOrder(userId);
+  let balance = 0;
+  if (activePurchaseOrderList.length > 0) {
+    activePurchaseOrderList.forEach(i => {
+      balance += i.balance;
+    });
+  }
+  return balance;
+}
 /**
  * @description get user Balance
  */
-export const getUserBalance = CatchAsync(async (req, res, next) => {});
+export const getUserBalance = CatchAsync(async (req, res, next) => {
+  const balance = await calculateUserBalance(req.user._id);
+  return res
+    .status(200)
+    .json(
+      new MobileRes(
+        "Balance Fetched Successfully",
+        { balance },
+        req.baseHeaders
+      )
+    );
+});
