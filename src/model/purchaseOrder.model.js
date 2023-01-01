@@ -17,6 +17,11 @@ const purchaseOrderSchema = new mongoose.Schema(
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "user"
+    },
+    type: {
+      type: String,
+      enum: ["purchased", "winning"],
+      default: "purchased"
     }
   },
   {

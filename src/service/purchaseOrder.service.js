@@ -61,5 +61,21 @@ export const addBalanceAdmin = CatchAsync(async (req, res, next) => {
       user: userObj._id
     });
 
-  return res.status(201).json(new MobileRes());
+  return res
+    .status(201)
+    .json(
+      new MobileRes(
+        "User Balance updated successfully",
+        purchaseOrderObj,
+        req.baseHeaders
+      )
+    );
 });
+
+async function getActivePurchaseOrder() {}
+
+async function calculateUserBalance() {}
+/**
+ * @description get user Balance
+ */
+export const getUserBalance = CatchAsync(async (req, res, next) => {});
