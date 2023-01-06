@@ -6,15 +6,15 @@ import axios from 'axios';
  * @param {*} password string
  * @description responsible for login 
  */
-export const login = async (phonenumber, password) => {
-    console.log(phonenumber, password)
+export async function login(phonenumber, password){
     try {
+        console.log(phonenumber, password)
         const res = await axios({
             method: 'POST',
             url: '/api/v1/auth/login',
             data: {
-                phonenumber: phonenumber,
-                password: password,
+                phonenumber,
+                password,
             }
         })
         if (res.data.status === 'success') {

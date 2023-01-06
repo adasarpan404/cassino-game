@@ -6,9 +6,8 @@
   "scripts": {
     "start": "nodemon --max-old-space-size=2048 --exec  babel-node src/index.js -e js",
     "build": "babel src --out-dir dist --copy-files --no-comments",
-    "serve": "npm run build && node start.js",
-    "watch:js": "parcel watch ./public/js/index.js --out-dir ./public/js --out-file bundle.js",
-    "build:js": "parcel build ./public/js/index.js --out-dir ./public/js --out-file bundle.js"
+    "serve": "npm run build && npm run build:js && node start.js",
+    "build:js": "webpack"
   },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
@@ -27,11 +26,11 @@
     "babel-plugin-inline-import": "^3.0.0",
     "babel-plugin-transform-object-rest-spread": "^7.0.0-beta.3",
     "babel-plugin-transform-remove-console": "^6.9.4",
-    "parcel-bundler": "^1.12.3"
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
   },
   "dependencies": {
     "@babel/plugin-transform-runtime": "^7.2.0",
-    "@babel/polyfill": "^7.12.1",
     "@babel/runtime": "^7.2.0",
     "axios": "^0.21.1",
     "babel-polyfill": "^6.26.0",

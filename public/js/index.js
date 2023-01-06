@@ -1,4 +1,4 @@
-import '@babel/polyfill';
+
 
 import {login} from './login.js'
 
@@ -10,6 +10,8 @@ if (loginForm) {
         e.preventDefault();
         const phonenumber = document.getElementById('phonenumber').value;
         const password = document.getElementById('password').value;
+        
         login(phonenumber, password)
     })
 }
+ 

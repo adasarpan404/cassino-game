@@ -38,6 +38,7 @@ app.use(cookieParser());
 app.use(compression());
 
 // specifying routes
+
 app.use("/", viewRouter);
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/purchase-order", purchaseOrderRouter);
