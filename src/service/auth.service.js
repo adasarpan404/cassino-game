@@ -54,7 +54,7 @@ const createSendToken = (user, statusCode, res, message, headers) => {
     ...user.toObject(),
     token
   };
-
+  console.log(data);
   res.status(statusCode).json(new MobileRes(message, data, headers));
 };
 
@@ -72,6 +72,7 @@ export const signUp = CatchAsync(async (req, res, next) => {
 /**@desc for doing the login  */
 export const login = CatchAsync(async (req, res, next) => {
   const { phonenumber, password } = req.body;
+  console.log(phonenumber, password);
   if (!phonenumber || !password) {
     return next(new AppError("please provide email and password", 400, true));
   }
